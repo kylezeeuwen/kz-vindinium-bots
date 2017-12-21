@@ -1,0 +1,111 @@
+{
+  "game": {
+    "id": "3cr4zc7a",
+    "turn": 28,
+    "maxTurns": 1200,
+    "heroes": [
+      {
+        "id": 1,
+        "name": "zayquanOne",
+        "userId": "zynjlif2",
+        "elo": 1200,
+        "pos": {
+          "x": 4,
+          "y": 1
+        },
+        "lastDir": "South",
+        "life": 73,
+        "gold": 3,
+        "mineCount": 1,
+        "spawnPos": {
+          "x": 0,
+          "y": 1
+        },
+        "powerUp": true,
+        "crashed": false
+      },
+      {
+        "id": 2,
+        "name": "random",
+        "pos": {
+          "x": 6,
+          "y": 0
+        },
+        "lastDir": "West",
+        "life": 93,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 9,
+          "y": 1
+        },
+        "powerUp": false,
+        "crashed": false
+      },
+      {
+        "id": 3,
+        "name": "random",
+        "pos": {
+          "x": 6,
+          "y": 5
+        },
+        "lastDir": "South",
+        "life": 93,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 9,
+          "y": 8
+        },
+        "powerUp": false,
+        "crashed": false
+      },
+      {
+        "id": 4,
+        "name": "random",
+        "pos": {
+          "x": 1,
+          "y": 7
+        },
+        "lastDir": "South",
+        "life": 93,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 0,
+          "y": 8
+        },
+        "powerUp": false,
+        "crashed": false
+      }
+    ],
+    "board": {
+      "size": 10,
+      "tiles": "##      ####      ##      ########@4            ####            []        []    $1@1  ##    ##    $-$-    ##    ##    $-@2  []    @3  []            ####              ########      ##      ####      ##"
+    },
+    "finished": false
+  },
+  "hero": {
+    "id": 1,
+    "name": "zayquanOne",
+    "userId": "zynjlif2",
+    "elo": 1200,
+    "pos": {
+      "x": 4,
+      "y": 1
+    },
+    "lastDir": "South",
+    "life": 73,
+    "gold": 3,
+    "mineCount": 1,
+    "spawnPos": {
+      "x": 0,
+      "y": 1
+    },
+    "powerUp": true,
+    "crashed": false
+  },
+  "token": "toj2",
+  "viewUrl": "http://vindinium.saas-dev.console.com.au/3cr4zc7a",
+  "playUrl": "http://vindinium.saas-dev.console.com.au/api/3cr4zc7a/toj2/play"
+}

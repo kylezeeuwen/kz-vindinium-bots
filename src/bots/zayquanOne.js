@@ -8,12 +8,11 @@ const Player = require('../utils/player');
 class ZayquanOne {
 
   constructor() {
-    this.defaultMove = 'f';
     this.currentObjective = null;
   }
 
   get randomMove() {
-    var dirs = 'nesw';
+    var dirs = ['WEST', 'EAST', 'NORTH', 'SOUTH'];
     var i = Math.floor(Math.random() * 4);
     return dirs[i];
   }
@@ -21,35 +20,35 @@ class ZayquanOne {
   selectNewObjective() {
 
     if (this.player.life < 60) {
-      const tavern = this.gotoNearestX('tavern');
+      const tavern = this.gotoNearestX('tavern')
       if (tavern) {
-        return true;
+        return true
       }
     }
 
-    const freeMines = this.game.getObjectiveCoords('free_mine');
-    const ownedMines = this.game.getObjectiveCoords('owned_mine');
-    const nearestMine = this.gotoNearestOfTheseObjectives(freeMines.concat(ownedMines), 'not_my_mines');
+    const freeMines = this.game.getObjectiveCoords('free_mine')
+    const ownedMines = this.game.getObjectiveCoords('owned_mine')
+    const nearestMine = this.gotoNearestOfTheseObjectives(freeMines.concat(ownedMines), 'not_my_mines')
     if (nearestMine) {
-      return true;
+      return true
     }
 
-    return false;
+    return false
   }
 
   gotoNearestX(objectiveType) {
-    const ca = new ClosestAccessible(this.player.coord, this.game, this.game.getObjectiveCoords(objectiveType));
-    const closestObjective = ca.getClosestObjective();
+    const ca = new ClosestAccessible(this.player.coord, this.game, this.game.getObjectiveCoords(objectiveType))
+    const closestObjective = ca.getClosestObjective()
 
     if (closestObjective) {
-      this.currentObjective = closestObjective;
-      console.log(`chose new ${objectiveType} objective`);
-      console.log(closestObjective);
-      return true;
+      this.currentObjective = closestObjective
+      console.log(`chose new ${objectiveType} objective`)
+      console.log(closestObjective)
+      return true
     }
     else {
-      console.log(`no accessible ${objectiveType}!`);
-      return false;
+      console.log(`no accessible ${objectiveType}!`)
+      return false
     }
   }
 
@@ -103,40 +102,34 @@ class ZayquanOne {
     return true;
   }
 
-  isACurrentObjective() {
+  hasCurrentObjective() {
     return this.currentObjective && this.currentObjective.path.length > 0;
   }
 
   takeTurnSync(state) {
-    console.log('start turn');
-    // const thresholdTimeout = setTimeout( () => {
-    //   console.log("timeout threshold kicked in");
-    //   delete this.currentObjective;
-    //   callback(null, this.randomMove);
-    // }, 750);
+    console.log('start turn')
 
-    const t0 = Date.now();
+    const t0 = Date.now()
     try {
       if (state.game.turn === 0) {
-        console.log("view URL: ", state.viewUrl);
-        console.log("play URL: ", state.playUrl);
+        console.log("view URL: ", state.viewUrl)
+        console.log("play URL: ", state.playUrl)
       }
 
-      this.state = state;
-      this.player = new Player(this.state);
-      this.game = new Game(this.state);
-      // this.game.printGrid();
+      this.state = state
+      this.player = new Player(this.state)
+      this.game = new Game(this.state)
 
-      if (!this.didPlayerMove() && !this.lastDecision != 'f') {
+      if (!this.didPlayerMove() && !this.lastDecision !== 'STAY') {
         console.error(`Player didnt move! Last decision: ${this.lastDecision} last position: ${this.lastPosition.name}`);
       }
 
-      if (!this.isACurrentObjective()) {
-        this.selectNewObjective();
+      if (!this.hasCurrentObjective()) {
+        this.selectNewObjective()
       }
 
       let nextMove = null;
-      if (this.isACurrentObjective()) {
+      if (this.hasCurrentObjective()) {
         const immediateDest = this.currentObjective.path.shift();
         nextMove = this.advancePath(immediateDest);
 
@@ -157,16 +150,15 @@ class ZayquanOne {
 
       this.recordLastPosition();
       this.recordLastDecision(nextMove);
-      // clearTimeout(thresholdTimeout);
-      console.log(`calling callback with ${nextMove}`);
+
+      console.log(`calling callback with ${nextMove}`)
       return nextMove
     }
     catch(e) {
-      console.error("Runtime Error!");
-      console.error(e);
-      // clearTimeout(thresholdTimeout);
-      console.log('calling callback');
-      return this.randomMove;
+      console.error("Runtime Error!")
+      console.error(e)
+      console.log('calling callback')
+      return this.randomMove
     }
   }
 
