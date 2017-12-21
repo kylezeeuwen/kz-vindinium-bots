@@ -74,10 +74,11 @@ class ZayquanOne {
     const d = immediateDestCoord;
     const c = this.player.coord;
 
-    if (d.y - c.y === -1) { return 'w' }
-    if (d.y - c.y === 1) { return 'e' }
-    if (d.x - c.x === -1) { return 'n' }
-    if (d.x - c.x === 1) { return 's' }
+    if (d.y - c.y === 0 && d.x - c.x === 0) { return 'STAY' }
+    if (d.y - c.y === -1) { return 'WEST' }
+    if (d.y - c.y === 1) { return 'EAST' }
+    if (d.x - c.x === -1) { return 'NORTH' }
+    if (d.x - c.x === 1) { return 'SOUTH' }
 
     console.log(`ERROR: cant figure out how to move to ${d.name} from ${c.name}`);
     delete this.currentObjective;
@@ -106,7 +107,7 @@ class ZayquanOne {
     return this.currentObjective && this.currentObjective.path.length > 0;
   }
 
-  takeTurn(state, callback) {
+  takeTurnSync(state) {
     console.log('start turn');
     // const thresholdTimeout = setTimeout( () => {
     //   console.log("timeout threshold kicked in");
@@ -116,7 +117,6 @@ class ZayquanOne {
 
     const t0 = Date.now();
     try {
-
       if (state.game.turn === 0) {
         console.log("view URL: ", state.viewUrl);
         console.log("play URL: ", state.playUrl);
@@ -146,7 +146,7 @@ class ZayquanOne {
           `current: ${this.player.coord.name}`,
           `nextMove: ${immediateDest.name}`,
           `direction: ${nextMove}`,
-          `objective: ${this.currentObjective.objective.coord.name}`,
+          `objective: ${_.get(this,'currentObjective.objective.coord.name')}`,
           `duration: ${Date.now() - t0}`
         ].join(' '));
       }
@@ -159,16 +159,21 @@ class ZayquanOne {
       this.recordLastDecision(nextMove);
       // clearTimeout(thresholdTimeout);
       console.log(`calling callback with ${nextMove}`);
-      callback(null, nextMove);
+      return nextMove
     }
     catch(e) {
       console.error("Runtime Error!");
       console.error(e);
       // clearTimeout(thresholdTimeout);
       console.log('calling callback');
-      callback(null, this.randomMove);
+      return this.randomMove;
     }
-  };
+  }
+
+  takeTurn(state, callback) {
+    const move = this.takeTurnSync(state)
+    callback(null, move)
+  }
 }
 
 module.exports = ZayquanOne;

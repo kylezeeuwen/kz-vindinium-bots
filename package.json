@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean_dist": "rm -r dist/*; mkdir -p dist",
+    "build": "yarn clean_dist && browserify src/bots/zayquanOne_browser_client_wrapper.js --debug --standalone zayquanOne -o dist/zayquanOne.js",
+    "push_to_frontend": "yarn build && cp dist/* ../vindinium-browser-client/frontend/js/bots"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "browserify": "^14.5.0",
     "chai": "^3.5.0",
     "lodash": "^4.17.2",
     "mocha": "^3.2.0",

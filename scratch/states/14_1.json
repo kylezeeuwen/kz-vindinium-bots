@@ -1,1 +1,107 @@
-{"game":{"id":"ddpe58zh","turn":4,"maxTurns":1200,"heroes":[{"id":1,"name":"zayquan_1","userId":"dqi8i0fv","elo":1200,"pos":{"x":2,"y":4},"lastDir":"South","life":99,"gold":0,"mineCount":0,"spawnPos":{"x":1,"y":4},"crashed":false},{"id":2,"name":"random","pos":{"x":11,"y":4},"lastDir":"North","life":99,"gold":0,"mineCount":0,"spawnPos":{"x":12,"y":4},"crashed":false},{"id":3,"name":"random","pos":{"x":12,"y":9},"lastDir":"West","life":99,"gold":0,"mineCount":0,"spawnPos":{"x":12,"y":9},"crashed":false},{"id":4,"name":"random","pos":{"x":1,"y":9},"lastDir":"West","life":99,"gold":0,"mineCount":0,"spawnPos":{"x":1,"y":9},"crashed":false}],"board":{"size":14,"tiles":"####                    ######$-      []$-$-[]@4    $-##    ##  @1  ####      ##                                ##    ##            ##    ######      ##    ##      ####      ##    ####    ##            ##    ####    ##      ####      ##    ##      ######    ##            ##    ##                                ##  @2  ####      ##    ##$-      []$-$-[]@3    $-######                    ####"},"finished":false},"hero":{"id":1,"name":"zayquan_1","userId":"dqi8i0fv","elo":1200,"pos":{"x":2,"y":4},"lastDir":"South","life":99,"gold":0,"mineCount":0,"spawnPos":{"x":1,"y":4},"crashed":false},"token":"dlwh","viewUrl":"http://vindinium.saas-dev.console.com.au/ddpe58zh","playUrl":"http://vindinium.saas-dev.console.com.au/api/ddpe58zh/dlwh/play","context":{}}
+{
+  "game": {
+    "id": "ddpe58zh",
+    "turn": 4,
+    "maxTurns": 1200,
+    "heroes": [
+      {
+        "id": 1,
+        "name": "zayquan_1",
+        "userId": "dqi8i0fv",
+        "elo": 1200,
+        "pos": {
+          "x": 2,
+          "y": 4
+        },
+        "lastDir": "South",
+        "life": 99,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 1,
+          "y": 4
+        },
+        "crashed": false
+      },
+      {
+        "id": 2,
+        "name": "random",
+        "pos": {
+          "x": 11,
+          "y": 4
+        },
+        "lastDir": "North",
+        "life": 99,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 12,
+          "y": 4
+        },
+        "crashed": false
+      },
+      {
+        "id": 3,
+        "name": "random",
+        "pos": {
+          "x": 12,
+          "y": 9
+        },
+        "lastDir": "West",
+        "life": 99,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 12,
+          "y": 9
+        },
+        "crashed": false
+      },
+      {
+        "id": 4,
+        "name": "random",
+        "pos": {
+          "x": 1,
+          "y": 9
+        },
+        "lastDir": "West",
+        "life": 99,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 1,
+          "y": 9
+        },
+        "crashed": false
+      }
+    ],
+    "board": {
+      "size": 14,
+      "tiles": "####                    ######$-      []$-$-[]@4    $-##    ##  @1  ####      ##                                ##    ##            ##    ######      ##    ##      ####      ##    ####    ##            ##    ####    ##      ####      ##    ##      ######    ##            ##    ##                                ##  @2  ####      ##    ##$-      []$-$-[]@3    $-######                    ####"
+    },
+    "finished": false
+  },
+  "hero": {
+    "id": 1,
+    "name": "zayquan_1",
+    "userId": "dqi8i0fv",
+    "elo": 1200,
+    "pos": {
+      "x": 2,
+      "y": 4
+    },
+    "lastDir": "South",
+    "life": 99,
+    "gold": 0,
+    "mineCount": 0,
+    "spawnPos": {
+      "x": 1,
+      "y": 4
+    },
+    "crashed": false
+  },
+  "token": "dlwh",
+  "viewUrl": "http://vindinium.saas-dev.console.com.au/ddpe58zh",
+  "playUrl": "http://vindinium.saas-dev.console.com.au/api/ddpe58zh/dlwh/play",
+  "context": {}
+}

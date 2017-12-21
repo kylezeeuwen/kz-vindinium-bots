@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const vClient = require('vindinium-client');
 
-const botDefinition = require('./src/bots/zayquan_1');
+const botDefinition = require('./src/bots/zayquanOne');
 
 const bot = new botDefinition();
 
