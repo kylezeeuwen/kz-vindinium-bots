@@ -1,0 +1,102 @@
+{
+  "game": {
+    "id": "u6o92q59",
+    "turn": 0,
+    "maxTurns": 1200,
+    "heroes": [
+      {
+        "id": 1,
+        "name": "zayquan_1",
+        "userId": "dqi8i0fv",
+        "elo": 1200,
+        "pos": {
+          "x": 1,
+          "y": 0
+        },
+        "life": 100,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 1,
+          "y": 0
+        },
+        "crashed": false
+      },
+      {
+        "id": 2,
+        "name": "random",
+        "pos": {
+          "x": 8,
+          "y": 0
+        },
+        "life": 100,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 8,
+          "y": 0
+        },
+        "crashed": false
+      },
+      {
+        "id": 3,
+        "name": "random",
+        "pos": {
+          "x": 8,
+          "y": 9
+        },
+        "life": 100,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 8,
+          "y": 9
+        },
+        "crashed": false
+      },
+      {
+        "id": 4,
+        "name": "random",
+        "pos": {
+          "x": 1,
+          "y": 9
+        },
+        "life": 100,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 1,
+          "y": 9
+        },
+        "crashed": false
+      }
+    ],
+    "board": {
+      "size": 10,
+      "tiles": "        [][]        @1##  $-    $-  ##@4                      $-$-##    ##$-$-  ##                ####                ##  $-$-##    ##$-$-                      @2##  $-    $-  ##@3        [][]        "
+    },
+    "finished": false
+  },
+  "hero": {
+    "id": 1,
+    "name": "zayquan_1",
+    "userId": "dqi8i0fv",
+    "elo": 1200,
+    "pos": {
+      "x": 1,
+      "y": 0
+    },
+    "life": 100,
+    "gold": 0,
+    "mineCount": 0,
+    "spawnPos": {
+      "x": 1,
+      "y": 0
+    },
+    "crashed": false
+  },
+  "token": "ce6s",
+  "viewUrl": "http://vindinium.saas-dev.console.com.au/u6o92q59",
+  "playUrl": "http://vindinium.saas-dev.console.com.au/api/u6o92q59/ce6s/play",
+  "context": {}
+}

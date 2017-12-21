@@ -1,0 +1,56 @@
+{
+  "game": {
+    "id": "kn96j9sb",
+    "turn": 4,
+    "maxTurns": 1200,
+    "heroes": [
+      {
+        "id": 1,
+        "name": "zayquan_I",
+        "userId": "i9m97f52",
+        "elo": 1172,
+        "pos": {
+          "x": 5,
+          "y": 3
+        },
+        "lastDir": "South",
+        "life": 99,
+        "gold": 0,
+        "mineCount": 0,
+        "spawnPos": {
+          "x": 4,
+          "y": 3
+        },
+        "crashed": false
+      }
+    ],
+    "board": {
+      "size": 18,
+      "tiles": "##  ##                        ##  ####            ########            ##############            ##############        ##  ##    ##  ##        ######[]      ##        ##  @4  []######    @1        $-$-              ####        $-  ########  $-        ######        ############        ####      ####  ############  ####            ####  ############  ####      ####        ############        ######        $-  ########  $-        ####    @2        $-$-              ######[]      ##        ##    @3[]######        ##  ##    ##  ##        ##############            ##############            ########            ####  ##                        ##  ##"
+    },
+    "finished": false
+  },
+  "hero": {
+    "id": 1,
+    "name": "zayquan_I",
+    "userId": "i9m97f52",
+    "elo": 1172,
+    "pos": {
+      "x": 5,
+      "y": 3
+    },
+    "lastDir": "South",
+    "life": 99,
+    "gold": 0,
+    "mineCount": 0,
+    "spawnPos": {
+      "x": 4,
+      "y": 3
+    },
+    "crashed": false
+  },
+  "token": "vewv",
+  "viewUrl": "http://vindinium.saas-dev.console.com.au/kn96j9sb",
+  "playUrl": "http://vindinium.saas-dev.console.com.au/api/kn96j9sb/vewv/play",
+  "context": {}
+}
