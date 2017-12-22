@@ -40,7 +40,7 @@ class ZayquanOne {
   selectNewObjective() {
     this.currentObjective = null
 
-    if (this.player.life < this.settings.healthyThreshold) {
+    if (this.player.life < this.settings.healthyThreshold && this.game.hero.gold >= 2) {
       const tavern = this.gotoNearestX('tavern')
       if (tavern) {
         this.currentObjective = tavern;
