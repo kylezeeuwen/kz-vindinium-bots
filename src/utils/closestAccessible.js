@@ -5,10 +5,11 @@ const Game = require('./game');
 
 class ClosestAccessible {
 
-  constructor(currentCoord, game, objectives) {
+  constructor(currentCoord, game, objectives, objectiveName) {
     this.currentCoord = currentCoord;
     this.game = game;
     this.objectives = objectives;
+    this.objectiveName = objectiveName
   }
 
   getNeighbors(coord) {
@@ -30,19 +31,14 @@ class ClosestAccessible {
   }
 
   getClosestObjective() {
-
-    console.log("start gen BST Tree");
     this.calcBST();
-    console.log("end gen BST Tree");
 
     const distances = {}
     const paths = {}
     let shortestDistance = 100000000;
     let nearestObjective = null;
     _(this.objectives).forEach( (objective) => {
-      // console.log(`considering objective : ${objective.coord.name}`);
       const path = this.getPathTo(objective.coord);
-      // console.log(`path to ${objective.coord.name} is ${path}`);
       if (path) {
         paths[objective.coord.name] = path;
         distances[objective.coord.name] = path.length;
@@ -61,15 +57,15 @@ class ClosestAccessible {
     }
 
     else {
-      console.log("no nearest objectives");
-      console.log("objectives");
-      console.log(JSON.stringify(this.objectives, {}, 2));
-
-      console.log("parents");
-      console.log(JSON.stringify(this.parents, {}, 2));
-
-      console.log("cellStates");
-      console.log(JSON.stringify(this.cellStates));
+      console.log(`no nearest ${this.objectiveName} objective`);
+      // console.log("objectives");
+      // console.log(JSON.stringify(this.objectives, {}, 2));
+      //
+      // console.log("parents");
+      // console.log(JSON.stringify(this.parents, {}, 2));
+      //
+      // console.log("cellStates");
+      // console.log(JSON.stringify(this.cellStates));
     }
 
     return null;

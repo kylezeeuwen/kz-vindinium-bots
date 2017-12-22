@@ -8,8 +8,16 @@ const EnemyDetector = require('../utils/enemyDetector')
 
 class ZayquanOne {
 
-  constructor() {
+  static get defaultSettings() {
+    return {
+      healthyThreshold: 60,
+      nearbyEnemyDistance: 3
+    }
+  }
+
+  constructor(settings = {}) {
     this.currentObjective = null;
+    this.settings = _.defaults(settings, ZayquanOne.defaultSettings)
   }
 
   get randomMove() {
@@ -19,37 +27,91 @@ class ZayquanOne {
   }
 
   selectNewObjective() {
+    this.currentObjective = null
 
-    if (this.player.life < 60) {
+    if (this.player.life < this.settings.healthyThreshold) {
       const tavern = this.gotoNearestX('tavern')
       if (tavern) {
+        this.currentObjective = tavern;
         return true
       }
+    }
+
+    const runAwayInThisDirection = this.someoneNearbyCanKillMeSoRunAway()
+    if (runAwayInThisDirection) {
+      this.currentObjective = runAwayInThisDirection
+      return true
+    }
+
+    const nearbyValuableTargetsInThisDirection = this.someoneValuableAndWeakNearbySoKillThem()
+    if (nearbyValuableTargetsInThisDirection) {
+      this.currentObjective = nearbyValuableTargetsInThisDirection
+      return true
     }
 
     const freeMines = this.game.getObjectiveCoords('free_mine')
     const ownedMines = this.game.getObjectiveCoords('owned_mine')
     const nearestMine = this.gotoNearestOfTheseObjectives(freeMines.concat(ownedMines), 'not_my_mines')
     if (nearestMine) {
+      this.currentObjective = nearestMine
       return true
     }
 
     return false
   }
 
+  // return objective with path
+  someoneNearbyCanKillMeSoRunAway () {
+
+    const enemyDetector = new EnemyDetector(this.game)
+    const nearbyEnemies = enemyDetector.getEnemiesWithin(this.settings.nearbyEnemyDistance)
+    const nearbyDangerousEnemies = enemyDetector.getEnemiesStrongerThan(this.game.hero.life, nearbyEnemies)
+
+    if (nearbyDangerousEnemies) {
+      const coords = []
+      const myCoord = this.game.hero.coord
+      const coordsToRunTo = _(nearbyDangerousEnemies)
+        .map((nearbyEnemy) => {
+          return myCoord.validMovesAwayFrom(nearbyEnemy.coord, this.game.gridSize)
+        })
+        .flatten()
+        .filter((coord) => this.game.isTraversibleCell(coord))
+        .value()
+
+      if (coordsToRunTo.length > 0) {
+
+        return {
+          objective: {
+            coord: coordsToRunTo[0],
+            cell: '',
+            type: 'run away'
+          },
+          path: [
+            coordsToRunTo[0]
+          ]
+        }
+      }
+
+    }
+    return null
+  }
+
+  // return objective with path
+  someoneValuableAndWeakNearbySoKillThem() {
+    return null
+  }
+
+
   gotoNearestX(objectiveType) {
-    const ca = new ClosestAccessible(this.player.coord, this.game, this.game.getObjectiveCoords(objectiveType))
+    const ca = new ClosestAccessible(this.player.coord, this.game, this.game.getObjectiveCoords(objectiveType), objectiveType)
     const closestObjective = ca.getClosestObjective()
 
     if (closestObjective) {
-      this.currentObjective = closestObjective
-      console.log(`chose new ${objectiveType} objective`)
-      console.log(closestObjective)
-      return true
+      return closestObjective
     }
     else {
       console.log(`no accessible ${objectiveType}!`)
-      return false
+      return null
     }
   }
 
@@ -58,14 +120,11 @@ class ZayquanOne {
     const closestObjective = ca.getClosestObjective();
 
     if (closestObjective) {
-      this.currentObjective = closestObjective;
-      console.log(`chose new ${collectionName} objective`);
-      console.log(closestObjective);
-      return true;
+      return closestObjective
     }
     else {
       console.log(`no accessible ${collectionName}!`);
-      return false;
+      return null
     }
   }
 
@@ -108,7 +167,6 @@ class ZayquanOne {
   }
 
   takeTurnSync(state) {
-    console.log('start turn')
 
     const t0 = Date.now()
     try {
@@ -125,34 +183,32 @@ class ZayquanOne {
         console.error(`Player didnt move! Last decision: ${this.lastDecision} last position: ${this.lastPosition.name}`);
       }
 
-      if (!this.hasCurrentObjective()) {
-        this.selectNewObjective()
-      }
+      this.selectNewObjective()
 
       let nextMove = null;
       if (this.hasCurrentObjective()) {
+        console.log(`Current objective is ${this.currentObjective.objective.type}`)
         const immediateDest = this.currentObjective.path.shift();
         nextMove = this.advancePath(immediateDest);
 
-        console.log(this.game.goldCount);
-        console.log([
-          `life: ${this.player.life}`,
-          `current: ${this.player.coord.name}`,
-          `nextMove: ${immediateDest.name}`,
-          `direction: ${nextMove}`,
-          `objective: ${_.get(this,'currentObjective.objective.coord.name')}`,
-          `duration: ${Date.now() - t0}`
-        ].join(' '));
+        // console.log(this.game.goldCount)
+        // console.log([
+        //   `life: ${this.player.life}`,
+        //   `current: ${this.player.coord.name}`,
+        //   `nextMove: ${immediateDest.name}`,
+        //   `direction: ${nextMove}`,
+        //   `objective: ${_.get(this,'currentObjective.objective.coord.name')}`,
+        //   `duration: ${Date.now() - t0}`
+        // ].join(' '))
       }
       else {
-        console.log("no objective!");
+        console.log("no objective!")
         nextMove = this.randomMove;
       }
 
-      this.recordLastPosition();
-      this.recordLastDecision(nextMove);
+      this.recordLastPosition()
+      this.recordLastDecision(nextMove)
 
-      console.log(`calling callback with ${nextMove}`)
       return nextMove
     }
     catch(e) {

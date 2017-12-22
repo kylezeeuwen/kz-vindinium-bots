@@ -7,6 +7,14 @@ class Game {
     return ['hero', 'tavern', 'free_mine', 'owned_mine']
   }
 
+  get myHealth() {
+    return this.hero.life
+  }
+
+  get gridSize() {
+    return this.game.board.size
+  }
+
   constructor(state) {
     this.game = state.game
     this.id = state.hero.id
@@ -102,7 +110,8 @@ class Game {
             if (this.mapKey[cell] == objective) {
               this.objectives[objective].push({
                 coord: new Coord(rowIndex, columnIndex),
-                cell: cell
+                cell: cell,
+                type: objective
               })
             }
           })
