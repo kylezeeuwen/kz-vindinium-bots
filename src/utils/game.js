@@ -41,22 +41,25 @@ class Game {
 
     this._buildGrid()
     this._identifyObjectives()
-    this.processHeroesData()
+    this.processHeroesData(state)
   }
 
-  processHeroesData () {
+  processHeroesData (state) {
     this.enemies = {}
     _(this.game.heroes)
       .filter((heroData) => { return heroData.id !== this.id })
       .each((enemyData) => {
          this.enemies[enemyData.id] = enemyData
+        this.enemies[enemyData.id].coord = Coord.fromPos(this.enemies[enemyData.id].pos)
       })
+
+    this.hero = state.hero
+    this.hero.coord = Coord.fromPos(this.hero.pos)
   }
 
   iHaveSword () {
     return this.game.hero.powerUp
   }
-
 
   _buildGrid() {
     this.grid = _.chunk(this.tiles.split(''), this.size*2)

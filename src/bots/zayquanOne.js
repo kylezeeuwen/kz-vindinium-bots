@@ -4,6 +4,7 @@ const _ = require('lodash');
 const ClosestAccessible = require('../utils/closestAccessible');
 const Game = require('../utils/game');
 const Player = require('../utils/player');
+const EnemyDetector = require('../utils/enemyDetector')
 
 class ZayquanOne {
 

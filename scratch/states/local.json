@@ -1,13 +1,13 @@
 {
   "game": {
-    "id": "3cr4zc7a",
+    "id": "XXX",
     "turn": 28,
     "maxTurns": 1200,
     "heroes": [
       {
         "id": 1,
         "name": "zayquanOne",
-        "userId": "zynjlif2",
+        "userId": "XXX",
         "elo": 1200,
         "pos": {
           "x": 4,
@@ -32,9 +32,9 @@
           "y": 0
         },
         "lastDir": "West",
-        "life": 93,
-        "gold": 0,
-        "mineCount": 0,
+        "life": 10,
+        "gold": 20,
+        "mineCount": 4,
         "spawnPos": {
           "x": 9,
           "y": 1
@@ -88,7 +88,7 @@
   "hero": {
     "id": 1,
     "name": "zayquanOne",
-    "userId": "zynjlif2",
+    "userId": "XXX",
     "elo": 1200,
     "pos": {
       "x": 4,
