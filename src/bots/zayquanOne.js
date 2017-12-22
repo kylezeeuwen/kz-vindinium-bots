@@ -74,6 +74,12 @@ class ZayquanOne {
       return true
     }
 
+    const eliminateCompetition = this.eliminateCompetition(this.game.hero.gold)
+    if (eliminateCompetition) {
+      this.currentObjective = eliminateCompetition
+      return true
+    }
+
     return false
   }
 
@@ -114,10 +120,6 @@ class ZayquanOne {
 
   // return objective with path or NULL
   someoneValuableAndWeakNearbySoKillThem({ name, distanceThreshold, goldMineThreshold, healthThreshold = this.game.myHealth }) {
-
-    // console.log('{ name, distanceThreshold, goldMineThreshold, healthThreshold }')
-    // console.log(JSON.stringify({ name, distanceThreshold, goldMineThreshold, healthThreshold }, {}, 2))
-
     const enemyDetector = new EnemyDetector(this.game)
     const nearbyEnemies = enemyDetector.getEnemiesWithin(distanceThreshold)
     const nearbyWeakEnemies = enemyDetector.getEnemiesWeakerThan(healthThreshold, nearbyEnemies)
@@ -131,6 +133,31 @@ class ZayquanOne {
             coord: enemyData.coord,
             cell: '',
             type: `${name} : ${enemyData.id}(${enemyData.name})`
+          }
+        })
+        .value()
+      const target = this.gotoNearestOfTheseObjectives(attackObjectives, name)
+      if (target) {
+        return target
+      }
+    }
+
+    return null
+  }
+
+  eliminateCompetition(goldThreshold) {
+    const name = 'eliminate competition'
+    const enemyDetector = new EnemyDetector(this.game)
+    const competition = enemyDetector.getEnemiesWithAtLeastThisMuchGold(goldThreshold)
+
+    if (competition.length > 0) {
+      console.log(`found competition candidates`)
+      const attackObjectives = _(competition)
+        .map((enemyData) => {
+          return {
+            coord: enemyData.coord,
+            cell: '',
+            type: name
           }
         })
         .value()

@@ -34,7 +34,7 @@ class EnemyDetector {
       .value()
   }
 
-  getEnemiesWithMoreGoldThan (goldThreshold, enemies = this.game.enemies) {
+  getEnemiesWithAtLeastThisMuchGold (goldThreshold, enemies = this.game.enemies) {
     return _(enemies)
       .filter(enemy => {
         return enemy.gold >= goldThreshold
