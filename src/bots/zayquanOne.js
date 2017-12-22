@@ -209,7 +209,9 @@ class ZayquanOne {
 
   takeTurnSync(state) {
 
-    const t0 = Date.now()
+    const startTime = Date.now()
+    let endTime = null
+    let objective = ''
     try {
       if (state.game.turn === 0) {
         console.log("view URL: ", state.viewUrl)
@@ -228,10 +230,10 @@ class ZayquanOne {
 
       let nextMove = null;
       if (this.hasCurrentObjective()) {
-        console.log(`Current objective is ${this.currentObjective.objective.type}`)
         const immediateDest = this.currentObjective.path.shift();
         nextMove = this.advancePath(immediateDest);
-
+        objective = this.currentObjective.objective.type
+        endTime = Date.now()
         // console.log(this.game.goldCount)
         // console.log([
         //   `life: ${this.player.life}`,
@@ -244,9 +246,10 @@ class ZayquanOne {
       }
       else {
         console.log("no objective!")
+        endTime = Date.now()
         nextMove = this.randomMove;
       }
-
+      console.log(`Bot took ${endTime - startTime}ms, ojective: ${objective}, move ${nextMove}`)
       this.recordLastPosition()
       this.recordLastDecision(nextMove)
 
