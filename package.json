@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clean_dist": "rm -r dist/*; mkdir -p dist",
-    "build": "yarn clean_dist && browserify src/bots/zayquanOne_browser_client_wrapper.js --debug --standalone zayquanOne -o dist/zayquanOne.js",
-    "push_to_frontend": "yarn build && cp dist/* ../vindinium-browser-client/frontend/js/bots"
+    "buildOne": "browserify src/bots/zayquanOne_browser_client_wrapper.js --debug --standalone zayquanOne -o dist/zayquanOne.js",
+    "buildTwo": "browserify src/bots/zayquanTwo_browser_client_wrapper.js --debug --standalone zayquanTwo -o dist/zayquanTwo.js",
+    "push_to_frontend": "yarn clean_dist && yarn buildOne && yarn buildTwo && cp dist/* ../vindinium-browser-client/frontend/js/bots"
   },
   "author": "",
   "license": "ISC",

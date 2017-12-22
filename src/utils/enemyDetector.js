@@ -9,6 +9,18 @@ class EnemyDetector {
     this.game = game;
   }
 
+  getEnemyWithMostGold () {
+    let maxGold = -1
+    let holderOfMaxGold = null
+
+    _.values(this.game.enemies).map(enemy => {
+      if (maxGold < enemy.gold) {
+        maxGold = enemy.gold; holderOfMaxGold = enemy.id
+      }
+    })
+    return this.game.enemies[holderOfMaxGold]
+  }
+
   getEnemiesWithin (distance, enemies = this.game.enemies) {
     const myPosition = this.game.hero.coord
     return _(enemies)

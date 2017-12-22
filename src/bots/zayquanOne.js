@@ -6,6 +6,8 @@ const Game = require('../utils/game');
 const Player = require('../utils/player');
 const EnemyDetector = require('../utils/enemyDetector')
 
+const log = false
+
 class ZayquanOne {
 
   static get defaultSettings() {
@@ -126,7 +128,6 @@ class ZayquanOne {
     const nearbyWeakValuableEnemies = enemyDetector.getEnemiesWithAtLeastThisManyGoldMines(goldMineThreshold, nearbyWeakEnemies)
 
     if (nearbyWeakValuableEnemies.length > 0) {
-      console.log(`found nearbyWeakValuableEnemies.length ${name} candidates`)
       const attackObjectives = _(nearbyWeakValuableEnemies)
         .map((enemyData) => {
           return {
@@ -151,7 +152,6 @@ class ZayquanOne {
     const competition = enemyDetector.getEnemiesWithAtLeastThisMuchGold(goldThreshold)
 
     if (competition.length > 0) {
-      console.log(`found competition candidates`)
       const attackObjectives = _(competition)
         .map((enemyData) => {
           return {
@@ -250,7 +250,7 @@ class ZayquanOne {
       this.game = new Game(this.state)
 
       if (!this.didPlayerMove() && !this.lastDecision !== 'STAY') {
-        console.error(`Player didnt move! Last decision: ${this.lastDecision} last position: ${this.lastPosition.name}`);
+        if (log) { console.error(`Player didnt move! Last decision: ${this.lastDecision} last position: ${this.lastPosition.name}`); }
       }
 
       this.selectNewObjective()
@@ -261,22 +261,13 @@ class ZayquanOne {
         nextMove = this.advancePath(immediateDest);
         objective = this.currentObjective.objective.type
         endTime = Date.now()
-        // console.log(this.game.goldCount)
-        // console.log([
-        //   `life: ${this.player.life}`,
-        //   `current: ${this.player.coord.name}`,
-        //   `nextMove: ${immediateDest.name}`,
-        //   `direction: ${nextMove}`,
-        //   `objective: ${_.get(this,'currentObjective.objective.coord.name')}`,
-        //   `duration: ${Date.now() - t0}`
-        // ].join(' '))
       }
       else {
         console.log("no objective!")
         endTime = Date.now()
         nextMove = this.randomMove;
       }
-      console.log(`Bot took ${endTime - startTime}ms, ojective: ${objective}, move ${nextMove}`)
+      if (log) { console.log(`Bot took ${endTime - startTime}ms, objective: ${objective}, move ${nextMove}`) }
       this.recordLastPosition()
       this.recordLastDecision(nextMove)
 
@@ -291,7 +282,15 @@ class ZayquanOne {
   }
 
   takeTurn(state, callback) {
+
+    const timeout = setTimeout(() => {
+      const move = this.randomMove
+      console.log(`Timeout exceeded ! Making random move`)
+      callback(null, move)
+    }, 900)
+
     const move = this.takeTurnSync(state)
+    clearTimeout(timeout)
     callback(null, move)
   }
 }

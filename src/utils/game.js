@@ -56,6 +56,7 @@ class Game {
     this.enemies = {}
     _(this.game.heroes)
       .filter((heroData) => { return heroData.id !== this.id })
+      .filter((heroData) => { return !heroData.name.match(/zayquan/) })
       .each((enemyData) => {
          this.enemies[enemyData.id] = enemyData
         this.enemies[enemyData.id].coord = Coord.fromPos(this.enemies[enemyData.id].pos)
