@@ -42,6 +42,28 @@ class Coord {
 
     return destinations
   }
+
+  validMovesTowards(coord, gridSize) {
+    let deltaX = (coord.x - this.x)
+    let deltaY = (coord.y - this.y)
+
+    // TODO cludgy ...
+    if (deltaX > 1) { deltaX = 1 }
+    if (deltaX < -1) { deltaX = -1 }
+    if (deltaY > 1) { deltaY = 1 }
+    if (deltaY < -1) { deltaY = -1 }
+
+    const destinations = [
+      new Coord(this.x + deltaX, this.y),
+      new Coord(this.x, this.y + deltaY)
+    ].filter((coord) => {
+      return coord.x >= 0 && coord.x < gridSize && coord.y >= 0 && coord.y < gridSize
+    }).filter((coord) => {
+      return this.x !== coord.x || this.y !== coord.y
+    })
+
+    return destinations
+  }
 }
 
 module.exports = Coord

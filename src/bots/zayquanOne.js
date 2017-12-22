@@ -11,7 +11,18 @@ class ZayquanOne {
   static get defaultSettings() {
     return {
       healthyThreshold: 60,
-      nearbyEnemyDistance: 3
+      nearbyDangerousEnemyDistance: 3,
+      weakerThanMeAndValuable: {
+        distanceThreshold: 4,
+        goldMineThreshold: 1,
+        name: ' attack weakerThanMeAndValuable'
+      },
+      reallyWeakNearbyValuable: {
+        distanceThreshold: 8,
+        goldMineThreshold: 2,
+        healthThreshold: 20,
+        name: 'attack reallyWeakNearbyValuable'
+      }
     }
   }
 
@@ -43,9 +54,15 @@ class ZayquanOne {
       return true
     }
 
-    const nearbyValuableTargetsInThisDirection = this.someoneValuableAndWeakNearbySoKillThem()
-    if (nearbyValuableTargetsInThisDirection) {
-      this.currentObjective = nearbyValuableTargetsInThisDirection
+    const reallyWeakNearbyValuableTargets = this.someoneValuableAndWeakNearbySoKillThem(this.settings.reallyWeakNearbyValuable)
+    if (reallyWeakNearbyValuableTargets) {
+      this.currentObjective = reallyWeakNearbyValuableTargets
+      return true
+    }
+
+    const weakerThanMeNearbyValuableTargets = this.someoneValuableAndWeakNearbySoKillThem(this.settings.weakerThanMeAndValuable)
+    if (weakerThanMeNearbyValuableTargets) {
+      this.currentObjective = weakerThanMeNearbyValuableTargets
       return true
     }
 
@@ -60,11 +77,11 @@ class ZayquanOne {
     return false
   }
 
-  // return objective with path
+  // return objective with path or NULL
   someoneNearbyCanKillMeSoRunAway () {
 
     const enemyDetector = new EnemyDetector(this.game)
-    const nearbyEnemies = enemyDetector.getEnemiesWithin(this.settings.nearbyEnemyDistance)
+    const nearbyEnemies = enemyDetector.getEnemiesWithin(this.settings.nearbyDangerousEnemyDistance)
     const nearbyDangerousEnemies = enemyDetector.getEnemiesStrongerThan(this.game.hero.life, nearbyEnemies)
 
     if (nearbyDangerousEnemies) {
@@ -91,16 +108,40 @@ class ZayquanOne {
           ]
         }
       }
-
     }
     return null
   }
 
-  // return objective with path
-  someoneValuableAndWeakNearbySoKillThem() {
+  // return objective with path or NULL
+  someoneValuableAndWeakNearbySoKillThem({ name, distanceThreshold, goldMineThreshold, healthThreshold = this.game.myHealth }) {
+
+    // console.log('{ name, distanceThreshold, goldMineThreshold, healthThreshold }')
+    // console.log(JSON.stringify({ name, distanceThreshold, goldMineThreshold, healthThreshold }, {}, 2))
+
+    const enemyDetector = new EnemyDetector(this.game)
+    const nearbyEnemies = enemyDetector.getEnemiesWithin(distanceThreshold)
+    const nearbyWeakEnemies = enemyDetector.getEnemiesWeakerThan(healthThreshold, nearbyEnemies)
+    const nearbyWeakValuableEnemies = enemyDetector.getEnemiesWithAtLeastThisManyGoldMines(goldMineThreshold, nearbyWeakEnemies)
+
+    if (nearbyWeakValuableEnemies.length > 0) {
+      console.log(`found nearbyWeakValuableEnemies.length ${name} candidates`)
+      const attackObjectives = _(nearbyWeakValuableEnemies)
+        .map((enemyData) => {
+          return {
+            coord: enemyData.coord,
+            cell: '',
+            type: `${name} : ${enemyData.id}(${enemyData.name})`
+          }
+        })
+        .value()
+      const target = this.gotoNearestOfTheseObjectives(attackObjectives, name)
+      if (target) {
+        return target
+      }
+    }
+
     return null
   }
-
 
   gotoNearestX(objectiveType) {
     const ca = new ClosestAccessible(this.player.coord, this.game, this.game.getObjectiveCoords(objectiveType), objectiveType)
