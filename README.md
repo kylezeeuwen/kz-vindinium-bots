@@ -39,3 +39,11 @@ Steps:
 
 * In the vindinium-browser-client run `node index.js`, then goto [http://localhost:4242](http://localhost:4242). Select the botname (this must match the name in the package.json build step)
 * Any time you make changes to your bot, run the following in the "kz-vindinium-bots" directory : `yarn push_to_frontend`
+
+# TODO / Thoughts on Conclusion of most recent hack
+
+* Keep a record of who shows aggressive behaviour and only run from killers
+* Note who is beating me in gold count and prioritise killing them
+* Make sure my "valuable and vulnerable player" logic accounts for how many gold mines controlled by player
+* will likely need to extend BSD to be more dijstra like in that it has shortest path to from every point not just shortest path from me to everything
+* Keep a "cross game memory" for observations about specific players
